@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Card - Marketplace</title>
+    <link rel="icon" href="theicon.ico" type="image/ico">
+    <style>
+        html, body { height: 100%; margin: 0; padding: 0; }
+        body {
+            font-family: monospace;
+            background: #fff;
+            min-height: 100vh;
+        }
+        .bg {
+            position: fixed; inset: 0; z-index: 0;
+            background: radial-gradient(circle at 20% 20%, #2ef306, transparent 20%),
+                        radial-gradient(circle at 80% 80%, #f8c007, transparent 20%),
+                        linear-gradient(180deg,#fc02e7,#0703f3);
+        }
+        
+
+        /* Fixed top-right navigation and logo */
+        .topbar-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            background: rgba(223, 193, 243, 0.36);
+            border-bottom-left-radius: 18px;
+            box-shadow: 0 2px 10px #6e6eff44;
+            padding: 8px 22px 8px 18px;
+        }
+        .logo-img {
+            height: 56px;
+            width: 56px;
+            border-radius: 50%;
+            margin-right: 8px;
+            object-fit: cover;
+            border: 2px solid #6e6eff;
+            background: #fff;
+        }
+        .marketplace-cards {
+            display: flex;
+            gap: 12px;
+        }
+        .button-side, .button-sideactive {
+            min-width: 110px;
+            height: 40px;
+            margin: 0 2px;
+            border-radius: 6px;
+            border: 2px solid #6e6eff;
+            background: rgba(150,165,253,0.185);
+            color: #1900ffc4;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #6e6eff33;
+            transition: background 0.18s, color 0.18s, border 0.18s;
+            position: relative;
+        }
+        .button-sideactive {
+            background: linear-gradient(180deg,#fc9002be,#9ff30371);
+            color: #fff;
+            border: 2px solid #f8c007;
+        }
+        .button-side:hover, .button-sideactive:hover {
+            background: linear-gradient(90deg,#fcb9029a,#bff30371);
+            color: #0703f3;
+            border: 2px solid #2ef306;
+        }
+        .button-side:active, .button-sideactive:active {
+            background: linear-gradient(180deg,#ff6eec 40%,#fc02e7 90%);
+            color: #fff;
+            border: 2px solid #fc02e7;
+        }
+
+        /* Card layout */
+        .marketplace-card {
+            display: flex;
+            border: 2px solid #6e6eff;
+            border-radius: 10px;
+            margin: 90px auto 32px auto;
+            max-width: 990px;
+            min-height: 340px;
+            box-shadow: 0 0 11px 3px #6e6eff33;
+            background: rgba(223, 193, 243, 0.18);
+            position: relative;
+        }
+        .left-section {
+            flex: 1 1 330px;
+            min-width: 270px;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            border-right: 2px solid #ff6eec;
+            overflow: hidden;
+            background: #fff;
+            padding: 0;
+        }
+        .product-image {
+            flex: 1 1 100%;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 210px;
+            max-height: 340px;
+        }
+        .actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.7rem;
+            color: #ffe044;
+            padding: 8px 0 0 0;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+        .icon { cursor: pointer; }
+        .icon:hover { color: #fa08fa; }
+        .right-section {
+            flex: 2 1 480px;
+            display: flex;
+            flex-direction: column;
+            padding: 16px 22px 0 22px;
+            background: transparent;
+        }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .price-info {
+            border: 2px solid #f3741fc4;
+            border-radius: 8px;
+            padding: 7px 18px;
+            background: linear-gradient(90deg,#fcb90219,#bff30319);
+            color: #4300fc;
+            font-weight: bold;
+            font-size: 1.08rem;
+            box-shadow: 0 0 8px #6e6eff22;
+        }
+        .price {margin-right: 10px;}
+        .off {margin-left: 10px;}
+        .top-row {
+            display: flex;
+            margin-bottom: 8px;
+        }
+        .description-box {
+            flex: 1 1 60%;
+            border: 2px solid #ffe044;
+            padding: 10px 18px;
+            border-radius: 7px;
+            background: #fff1;
+            font-size: 1.13rem;
+            color: #ffe044;
+            font-weight: bold;
+            min-width: 200px;
+        }
+        .middle-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 12px 0 0 0;
+        }
+        .profile-avatar {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            border: 2px solid #fa9420;
+            background: #fff;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .country, .username {
+            border: 2px solid #ffe044;
+            border-radius: 4px;
+            padding: 2px 13px;
+            font-size: 1.03rem;
+            color: #ffe044;
+            background:linear-gradient(180deg,#fcb90296,#bff30396);
+            font-weight: bold;
+        }
+        .pay-methods {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 12px;
+            gap: 2px;
+        }
+        .pay-title { font-size: 1rem; color: #ffe044; margin-bottom: 2px; }
+        .pay-icons { display: flex; gap: 8px; }
+        .pay-icons input[type="checkbox"] {margin-right: 2px;}
+        .pay-icons img {
+            width: 30px;
+            height: 20px;
+            background: #fff;
+            border-radius: 5px;
+            object-fit: contain;
+            border: 1px solid #ffe044;
+            padding: 1px;
+        }
+        .spacer {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .follow-btn, .buy-btn {
+            border: 2px solid #ffe044;
+            border-radius: 6px;
+            background: #ffe044;
+            color: #3b03f3;
+            font-size: 0.97rem;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: background 0.18s, color 0.18s;
+        }
+        .buy-btn { color: #fff; background: #fa08fa; border-color: #fa08fa;}
+        .follow-btn:hover, .buy-btn:hover { background: #2ef306; color: #fff; }
+        .chat-section {
+            border: 1.2px solid #ffe044;
+            border-radius: 7px;
+            background: rgba(223, 193, 243, 0.185);
+            box-shadow:0 0 11px 3px rgba(2,6,248,0.247);
+            padding: 11px 17px 8px 17px;
+            margin-top: 18px;
+            min-width: 90%;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            height: 105px;
+            overflow-x:visible;
+        }
+        
+        
+        .chat-box {
+            width: 100%;
+            min-height: 80px;
+            max-height: 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .chat-bubble {
+            display: inline-block;
+            background: #f09712ab;
+            color: #f0eff3;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.97rem;
+            margin-bottom: 1px;
+            max-width: 82%;
+            word-break: break-word;
+        }
+        .chat-bubble.user { align-self: flex-end; background: #f09c3d80; }
+        .chat-bubble.seller { align-self: flex-start; background: #fa08fa; }
+        .chat-input {
+            width: 90%;
+            display: flex;
+            gap: 1px;
+            margin-top: 0;
+        }
+        .chat-input input {
+            flex: 1 1 auto;
+            padding: 5px;
+            border-radius: 20px;
+            border: 1px solid #ffe044;
+            font-size: 0.97rem;
+            outline: none;
+        }
+        .chat-input button {
+            background: #ffe044;
+            color: #fa08fad5;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.9s;
+        }
+        .chat-input button:hover {
+            background: #29df05c7;
+            color: #ffe044;
+        }
+        @media (max-width: 1100px) {
+            .marketplace-card {
+                flex-direction: column;
+                min-width: 90vw;
+                margin: 100px auto 20px auto;
+            }
+            .left-section, .right-section {
+                width: 100%;
+                max-width: 100vw;
+                padding: 0;
+            }
+            .chat-section {
+                min-width: 98%;
+            }
+        }
+        @media (max-width: 700px) {
+            .topbar-nav {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 8px;
+                padding: 7px 6px 7px 6px;
+            }
+            .marketplace-card { margin: 90px 2vw 20px 2vw;}
+            .description-box { font-size: 0.95rem; padding: 7px 8px;}
+            .price-info { font-size: 0.97rem; padding: 6px 10px;}
+            .chat-section{ font-size: 0.92rem; padding: 7px 7px;}
+        }
+        @media (max-width: 500px) {
+            .marketplace-card {margin: 110px 0 18px 0;}
+            .chat-section {min-width: 95vw;}
+            .left-section {min-width: 100vw;}
+            .profile-avatar {width: 40px; height: 40px;}
+        }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <!-- Search bar at bottom-left corner -->
+<div style="position:fixed;bottom:18px;left:18px;z-index:1001;width:320px;">
+    <form id="searchForm" style="display:flex;gap:6px;">
+        <input type="text" id="searchInput" placeholder="Search products..." style="flex:1;padding:8px;border-radius:6px;border:2px solid #6e6eff;">
+        <button type="submit" style="padding:8px 16px;border-radius:6px;border:2px solid #6e6eff;background:#ffe044;color:#3b03f3;font-weight:bold;cursor:pointer;">Search</button>
+    </form>
+</div>
+<script>
+document.getElementById('searchForm').onsubmit = function(e) {
+    e.preventDefault();
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('.marketplace-card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? '' : 'none';
+    });
+    const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/marketplace', { useNewUrlParser: true, useUnifiedTopology: true });
+
+// Product Schema
+const productSchema = new mongoose.Schema({
+    type: String,
+    name: String,
+    description: String,
+    price: Number,
+    commission: Number,
+    image: String,
+    seller: {
+        username: String,
+        country: String,
+        avatar: String,
+        payMethods: [String]
+    }
+});
+const Product = mongoose.model('Product', productSchema);
+
+// Chat Schema
+const chatSchema = new mongoose.Schema({
+    productId: mongoose.Schema.Types.ObjectId,
+    messages: [{ sender: String, text: String, timestamp: Date }]
+});
+const Chat = mongoose.model('Chat', chatSchema);
+
+// Get products (with optional search)
+app.get('/products', async (req, res) => {
+    const q = req.query.q ? req.query.q.toLowerCase() : '';
+    const products = await Product.find(q ? { name: new RegExp(q, 'i') } : {});
+    res.json(products);
+});
+
+// Get chat messages for a product
+app.get('/chat/:productId', async (req, res) => {
+    const chat = await Chat.findOne({ productId: req.params.productId });
+    res.json(chat ? chat.messages : []);
+});
+
+// Add a chat message
+app.post('/chat/:productId', async (req, res) => {
+    const { sender, text } = req.body;
+    let chat = await Chat.findOne({ productId: req.params.productId });
+    if (!chat) chat = new Chat({ productId: req.params.productId, messages: [] });
+    chat.messages.push({ sender, text, timestamp: new Date() });
+    await chat.save();
+    res.json(chat.messages);
+});
+
+app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+};
+</script>
+<script>
+    // Fetch products from backend and display them
+async function loadProducts(query = '') {
+    const res = await fetch(`http://localhost:3000/products?q=${encodeURIComponent(query)}`);
+    const products = await res.json();
+    const container = document.querySelector('.marketplace-cards');
+    container.innerHTML = '';
+    products.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'marketplace-card';
+        card.innerHTML = `
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <p>Price: $${product.price}</p>
+            <button onclick="openChat('${product._id}')">Chat</button>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// Call loadProducts on page load
+window.onload = () => loadProducts();
+
+// Hook up your search bar
+document.getElementById('searchForm').onsubmit = function(e) {
+    e.preventDefault();
+    const query = document.getElementById('searchInput').value;
+    loadProducts(query);
+};
+// Open chat for a product
+async function openChat(productId) {
+    const res = await fetch(`http://localhost:3000/chat/${productId}`);
+    const messages = await res.json();
+    // Display messages (implement your own UI)
+    alert('Chat messages:\n' + messages.map(m => `${m.sender}: ${m.text}`).join('\n'));
+}
+
+// Send a chat message
+async function sendChat(productId, sender, text) {
+    await fetch(`http://localhost:3000/chat/${productId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sender, text })
+    });
+    openChat(productId); // Refresh chat
+}
+</script>
+
+    <!-- Fixed TopBar Navigation and Logo -->
+    <div class="topbar-nav">
+        <img src="World Trading Empire Logo Design [256x256].ico" alt="logo" class="logo-img">
+        <div class="marketplace-cards">
+            <button class="button-sideactive">E-commerce</button>
+            <button class="button-side">Stocks</button>
+            <button class="button-side"  onclick="window.location='online-service.html'"> Online Services</button>
+            <button class="button-side" onclick="window.location='export.html'">Export Empire</button>
+        </div>
+    </div>
+
+    <!-- CARD 1 -->
+    <div class="marketplace-card">
+        <div class="left-section">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80" alt="Laptop Product">
+            </div>
+            <div class="actions">
+                <span class="icon" title="Favorite">&#9733;</span>
+                <span class="icon" title="Repost">&#128257;</span>
+                <span class="icon" title="Download">&#11015;</span>
+                <span class="icon" title="Like">&#10084;</span>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="price-row">
+                <div class="price-info">
+                    <span class="price">Price: $1200</span>
+                    <span class="off">Commission: 5%</span>
+                </div>
+            </div>
+            <div class="top-row">
+                <div class="description-box">
+                    <div>Type: Laptop</div>
+                    <div>Name: Lenovo ThinkPad X1</div>
+                    <div>Description: Powerful business laptop with 16GB RAM, 512GB SSD, and fingerprint security.</div>
+                </div>
+            </div>
+            <div class="middle-row">
+                <div class="profile-avatar"><img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Seller Profile"></div>
+                <div class="profile-info">
+                    <div class="country">Rwanda</div>
+                    <div class="username">Alice</div>
+                </div>
+                <div class="pay-methods">
+                    <span class="pay-title">Pay with:</span>
+                    <div class="pay-icons">
+                        <input type="checkbox" checked><img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="MasterCard" title="MasterCard">
+                        <input type="checkbox"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" title="PayPal">
+                        <input type="checkbox"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968753.png" alt="Mobile Money" title="Mobile Money">
+                    </div>
+                </div>
+                <div class="spacer">
+                    <button class="follow-btn">Follow</button>
+                    <button class="buy-btn">Buy</button>
+                </div>
+            </div>
+            <div class="chat-section">
+               
+                <div class="chat-box" id="chat1">
+                    <div class="chat-bubble seller">Welcome! Interested?</div>
+                    <div class="chat-bubble user">Is it new?</div>
+                    <div class="chat-bubble seller">Yes, brand new!</div>
+                </div>
+                <form class="chat-input" onsubmit="return sendChat('chat1', event)">
+                    <input type="text" placeholder="Type about product ..." />
+                    <button type="submit">&#9660;</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- CARD 2 -->
+    <div class="marketplace-card">
+        <div class="left-section">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Phone Product">
+            </div>
+            <div class="actions">
+                <span class="icon" title="Favorite">&#9733;</span>
+                <span class="icon" title="Repost">&#128257;</span>
+                <span class="icon" title="Download">&#11015;</span>
+                <span class="icon" title="Like">&#10084;</span>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="price-row">
+                <div class="price-info">
+                    <span class="price">Price: $999</span>
+                    <span class="off">Commission: 3%</span>
+                </div>
+            </div>
+            <div class="top-row">
+                <div class="description-box">
+                    <div>Type: Smartphone</div>
+                    <div>Name: iPhone 14 Pro</div>
+                    <div>Description: Latest Apple iPhone with A16 Bionic chip, 256GB storage, and ProMotion display.</div>
+                </div>
+            </div>
+            <div class="middle-row">
+                <div class="profile-avatar"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Seller Profile"></div>
+                <div class="profile-info">
+                    <div class="country">Rwanda</div>
+                    <div class="username">Bob</div>
+                </div>
+                <div class="pay-methods">
+                    <span class="pay-title">Pay with:</span>
+                    <div class="pay-icons">
+                        <input type="checkbox" checked><img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" title="PayPal">
+                        <input type="checkbox"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968753.png" alt="Mobile Money" title="Mobile Money">
+                    </div>
+                </div>
+                <div class="spacer">
+                    <button class="follow-btn">Follow</button>
+                    <button class="buy-btn">Buy</button>
+                </div>
+            </div>
+            <div class="chat-section">
+                <div class="chat-header">Chat about this product</div>
+                <div class="chat-box" id="chat2">
+                    <div class="chat-bubble seller">Hi, this is the new iPhone!</div>
+                    <div class="chat-bubble user">Does it support dual SIM?</div>
+                    <div class="chat-bubble seller">Yes, it does.</div>
+                </div>
+                <form class="chat-input" onsubmit="return sendChat('chat2', event)">
+                    <input type="text" placeholder="Type about products..." />
+                    <button type="submit">&#9660;</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- CARD 3 -->
+    <div class="marketplace-card">
+        <div class="left-section">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80" alt="Headphones">
+            </div>
+            <div class="actions">
+                <span class="icon" title="Favorite">&#9733;</span>
+                <span class="icon" title="Repost">&#128257;</span>
+                <span class="icon" title="Download">&#11015;</span>
+                <span class="icon" title="Like">&#10084;</span>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="price-row">
+                <div class="price-info">
+                    <span class="price">Price: $350</span>
+                    <span class="off">Commission: 2%</span>
+                </div>
+            </div>
+            <div class="top-row">
+                <div class="description-box">
+                    <div>Type: Headphones</div>
+                    <div>Name: Sony WH-1000XM4</div>
+                    <div>Description: Wireless noise-cancelling headphones, 30h battery life, touch controls.</div>
+                </div>
+            </div>
+            <div class="middle-row">
+                <div class="profile-avatar"><img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Seller Profile"></div>
+                <div class="profile-info">
+                    <div class="country">Rwanda</div>
+                    <div class="username">Carol</div>
+                </div>
+                <div class="pay-methods">
+                    <span class="pay-title">Pay with:</span>
+                    <div class="pay-icons">
+                        <input type="checkbox" checked><img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="MasterCard" title="MasterCard">
+                        <input type="checkbox" checked><img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" title="PayPal">
+                    </div>
+                </div>
+                <div class="spacer">
+                    <button class="follow-btn">Follow</button>
+                    <button class="buy-btn">Buy</button>
+                </div>
+            </div>
+            <div class="chat-section">
+                
+                <div class="chat-box" id="chat3">
+                    <div class="chat-bubble seller">Hi, these are Sony WH-1000XM4.</div>
+                    <div class="chat-bubble user">How long does the battery last?</div>
+                    <div class="chat-bubble seller">Up to 30 hours!</div>
+                </div>
+                <form class="chat-input" onsubmit="return sendChat('chat3', event)">
+                    <input type="text" placeholder="Type about products..." />
+                    <button type="submit">&#9660;</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- CARD 4 -->
+    <div class="marketplace-card">
+        <div class="left-section">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1526178613658-3a3f0f4c8e56?auto=format&fit=crop&w=800&q=80" alt="Bicycle">
+            </div>
+            <div class="actions">
+                <span class="icon" title="Favorite">&#9733;</span>
+                <span class="icon" title="Repost">&#128257;</span>
+                <span class="icon" title="Download">&#11015;</span>
+                <span class="icon" title="Like">&#10084;</span>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="price-row">
+                <div class="price-info">
+                    <span class="price">Price: $650</span>
+                    <span class="off">Commission: 4%</span>
+                </div>
+            </div>
+            <div class="top-row">
+                <div class="description-box">
+                    <div>Type: Bicycle</div>
+                    <div>Name: Trek Marlin 7</div>
+                    <div>Description: Durable mountain bike for all terrains, available in red and blue.</div>
+                </div>
+            </div>
+            <div class="middle-row">
+                <div class="profile-avatar"><img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Seller Profile"></div>
+                <div class="profile-info">
+                    <div class="country">Rwanda</div>
+                    <div class="username">Dan</div>
+                </div>
+                <div class="pay-methods">
+                    <span class="pay-title">Pay with:</span>
+                    <div class="pay-icons">
+                        <input type="checkbox" checked><img src="https://cdn-icons-png.flaticon.com/512/5968/5968753.png" alt="Mobile Money" title="Mobile Money">
+                    </div>
+                </div>
+                <div class="spacer">
+                    <button class="follow-btn">Follow</button>
+                    <button class="buy-btn">Buy</button>
+                </div>
+            </div>
+            <div class="chat-section">
+               
+                <div class="chat-box" id="chat4">
+                    <div class="chat-bubble seller">This Trek Marlin 7 is ready for any adventure!</div>
+                    <div class="chat-bubble user">Is it available in red?</div>
+                    <div class="chat-bubble seller">Yes, red and blue.</div>
+                </div>
+                <form class="chat-input" onsubmit="return sendChat('chat4', event)">
+                    <input type="text" placeholder="Type about product..." />
+                    <button type="submit">&#9660;</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Simple chat demo (expand with backend later)
+    function sendChat(chatId, event) {
+        event.preventDefault();
+        const form = event.target;
+        const input = form.querySelector("input[type='text']");
+        const message = input.value.trim();
+        if (!message) return false;
+        const chatBox = document.getElementById(chatId);
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "chat-bubble user";
+        msgDiv.textContent = message;
+        chatBox.appendChild(msgDiv);
+        input.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+        return false;
+    }
+    </script>
+</body>
+</html>

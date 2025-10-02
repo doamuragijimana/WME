@@ -1,0 +1,38 @@
+/* Reusable styles for all pages */
+html, body {
+  height: 100%; 
+  margin: 0; 
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto; 
+  display: flex;
+}
+.bg {
+  position: fixed; inset:0; z-index:0;
+  background: radial-gradient(circle at 20% 20%, #2ef306, transparent 20%),
+              radial-gradient(circle at 80% 80%, #f8c007, transparent 20%),
+              linear-gradient(180deg,#fc02e7,#0703f3);
+}
+.wrap { position: relative; z-index: 3; min-height:90vh; display:flex; align-items:center; padding:3rem;}
+.side-bar {
+  width:270px;
+  padding:2.5rem;
+  border-radius:14px;
+  background: rgba(193, 243, 236, 0.185);
+  border: 1px solid rgba(255, 250, 255, 0.226);
+  box-shadow: 0 20px 24px rgba(0,0,0,0.12);
+  backdrop-filter: blur(10px);
+  overflow: auto;
+}
+.button-side, .button-sideactive {
+  width:120px; height:130px; margin:5px; cursor:pointer; border-radius:5px;
+  font-size:16px; font-weight:bold; color:#000000c4;
+  border: 1px solid rgba(255,250,255,0.226); 
+  backdrop-filter: blur(10px);
+}
+.button-sideactive { background: linear-gradient(180deg,#fc9002be,#9ff30371); box-shadow:0 0 11px 3px rgba(248,224,2,0.692);}
+.button-side:hover, .button-sideactive:hover { background:linear-gradient(180deg,#fcb9029a,#bff30371); color:#0703f3ea; height:131px; width:121px; transition:0.8s; }
+.right-bar { width:730px; padding:4.5rem; max-height:470px; margin:19px; border-radius:14px; background: rgba(193,243,236,0.185); border:1px solid rgba(255,250,255,0.226); box-shadow:0 0 11px 3px rgba(2,6,248,0.247); backdrop-filter:blur(10px); color:#2ef306d5; overflow-x:auto; }
+h2 { text-align:center; color: rgba(0,4,255,0.527); text-decoration:underline; }
+main.content { flex-grow:1; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; transition:0.3s;}
+.video { padding:2.5rem; border-radius:10px; background: rgba(193,243,236,0.185); border:1px solid rgba(255,250,255,0.226); box-shadow:0 20px 24px rgba(0,0,0,0.12);}
+img { border-radius: 10em; cursor:pointer; }
+button { cursor:pointer; }

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>WMES online sevice /education/S1-S3</title>
+<style>
+  
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto;
+  display: flex;
+}
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 20%, #2ef306, transparent 20%),
+              radial-gradient(circle at 80% 80%, #f8c007, transparent 20%),
+              radial-gradient(circle at 90% 10%, #df06f3a2, transparent 20%),
+              radial-gradient(circle at 10% 90%, #ac07f8bb, transparent 20%),
+              radial-gradient(circle at 50% 40%, #f30606d0, transparent 20%),
+              radial-gradient(circle at 70% 30%, #07a0f8c4, transparent 20%),
+              linear-gradient(180deg, #fc02e7, #0703f3);
+}
+.wrap {
+  position: relative;
+  z-index: 3;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  padding: 3rem;
+}
+.s1{
+     width: fit-content;
+  padding: 1.5rem;
+  border-radius: 5px;
+  background: rgba(5, 212, 185, 0.445);
+  border: 1px solid rgba(255, 250, 255, 0.226);
+  box-shadow: 0 20px 24px rgba(0,0,0,0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: cursive;
+  font-size: 20px;
+  color: #f8c007;
+  cursor: pointer;
+}
+.tr{
+     position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+.s1active{
+    width: fit-content;
+  padding: 1.7rem;
+  border-radius: 5px;
+  background: rgba(212, 146, 5, 0.93);
+  border: 1px solid rgba(255, 250, 255, 0.226);
+  box-shadow: 0 20px 24px rgba(0,0,0,0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: cursive;
+  font-size: 20px;
+  color: #070bf8ff;
+  cursor: pointer; 
+  box-shadow:0 8px 24px rgba(241, 175, 31, 0.86);
+}
+
+.s1:hover{
+  width: fit-content;
+  padding: 1.5rem;
+  border-radius: 5px;
+  background: rgba(224, 210, 8, 0.96);
+  border: 1px solid rgba(255, 250, 255, 0.226);
+  box-shadow: 0 20px 24px rgba(0,0,0,0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: cursive;
+  font-size: 20px;
+  color: #070bf8ff;
+  cursor: pointer; 
+  box-shadow:0 8px 24px rgba(241, 227, 31, 0.93);   
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+<DIV class="TR">
+    
+     <div class="s1"onclick="window.location='l3-l5-l3.html'">L3 SWD301</div>
+    <div class="s1"onclick="window.location='l3-l5-l4.html'">L4 SWD401</div>
+    <div class="s1active" onclick="window.location='l3-l5-l5.html'">L5 SWD501</div>
+    
+    <br><br><br>
+    <div class="s1" onclick="window.location='WME-Home.html'"> < Home </div>
+
+</DIV>
+<div class="wrap">
+
+
+   <div class="s1">  <a href="pdf\TeM_SWDDA401_Data Structure and Algorithm Fundementals.pdf" target="_blank" rel="noopener noreferrer"> SWDDA401</a></div>
+    <div class="s1">  <a href="CHEMISTRY THEORY.pdf" target="_blank" rel="noopener noreferrer">SWDPP401</a></div>
+     <div class="s1">  <a href="ENGLISH.pdf" target="_blank" rel="noopener noreferrer"> English book</a></div>
+      <div class="s1">  <a href="ENT.pdf" target="_blank" rel="noopener noreferrer"> Enterprenuiership</a></div>
+       <div class="s1">  <a href="GEOGRAPHY.pdf" target="_blank" rel="noopener noreferrer"> Geography book</a></div>
+        <div class="s1">  <a href="HISTORY.pdf" target="_blank" rel="noopener noreferrer"> History</a></div>
+  
+     
+ 
+</div>
+</div>
+
+
+</body>
+</html>
